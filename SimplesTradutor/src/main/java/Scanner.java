@@ -1,7 +1,15 @@
+import java.util.Map;
+import java.util.HashMap;
 public class Scanner {
 
     private byte[] input;
     private int current;
+
+    private static final Map<String, TokenType> keywords;
+    static {
+        keywords = new HashMap<>();
+        keywords.put("let",    TokenType.LET);
+    }
 
     public Scanner (byte[] input) {
         this.input = input;
@@ -73,8 +81,10 @@ public class Scanner {
         int start = current;
         while (isAlphaNumeric(peek())) advance();
 
-        String id = new String(input, start, current-start);
-        return new Token(TokenType.IDENT, id);
+        String id = new String(input, start, current-start)  ;
+        TokenType type = keywords.get(id);
+        if (type == null) type = TokenType.IDENT;
+        return new Token(type, id);
     }
 
     //Metodo para remover caracteres em branco

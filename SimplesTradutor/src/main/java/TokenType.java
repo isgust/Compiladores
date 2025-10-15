@@ -5,5 +5,7 @@ public enum TokenType {
     NUMBER,
     IDENT,
 
+    LET,
+
     EOF
 }
