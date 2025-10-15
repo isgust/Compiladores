@@ -22,6 +22,16 @@ public class Parser {
         }
     }
 
+    void letStatement () {
+        match(TokenType.LET);
+        var id = currentToken.lexeme;
+        match(TokenType.IDENT);
+        match(TokenType.EQ);
+        expr();
+        System.out.println("pop "+id);
+        match(TokenType.SEMICOLON);
+    }
+
     // Novo metodo Digit
     void number () {
         System.out.println("push " + currentToken.lexeme);
@@ -62,6 +72,6 @@ public class Parser {
     }
 
     public void parse () {
-        expr();
+        letStatement();
     }
 }
