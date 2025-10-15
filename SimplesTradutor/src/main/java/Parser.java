@@ -1,9 +1,9 @@
-public class Parser {
+/*public class Parser {
 
     private Scanner scan;
     private char currentToken;
 
-    public Parser (byte[] input) {
+    public Parser(byte[] input) {
         scan = new Scanner(input);
         currentToken = scan.nextToken();
     }
@@ -56,4 +56,4 @@ public class Parser {
     public void parse () {
         expr();
     }
-}
+} */
