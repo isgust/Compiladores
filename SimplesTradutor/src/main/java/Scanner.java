@@ -23,36 +23,38 @@ public class Scanner {
     }
 
     // Retorna Token de 1 caractere
-    public String nextToken () {
+    public Token nextToken () {
         char ch = peek();
-
         if (ch == '0') {
             advance();
-            return Character.toString(ch);
-        } else if (Character.isDigit(ch)) {
+            return new Token (TokenType.NUMBER, Character.toString(ch));
+        }  else if (Character.isDigit(ch))
             return number();
 
-        }
+
+
         switch (ch) {
             case '+':
+                advance();
+                return new Token (TokenType.PLUS,"+");
             case '-':
                 advance();
-                return Character.toString(ch);
+                return new Token (TokenType.MINUS,"-");
+            case '\0':
+                return new Token (TokenType.EOF,"EOF");
             default:
-                break;
+                throw new Error("lexical error at " + ch);
         }
-        throw new Error("lexical error");
-
     }
 
     // Identificador de numero inteiro positivo
-    private String number() {
+    private Token number() {
         int start = current ;
         while (Character.isDigit(peek())) {
             advance();
         }
 
         String n = new String(input, start, current-start)  ;
-        return n;
+        return new Token(TokenType.NUMBER, n);
     }
 }
