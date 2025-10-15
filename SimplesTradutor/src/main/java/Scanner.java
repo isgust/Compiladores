@@ -26,13 +26,16 @@ public class Scanner {
     public Token nextToken () {
         skipWhitespace(); // Metodo de igore para whitespace
         char ch = peek();
+
+        if (isAlpha(ch)) {
+            return identifier();
+        }
+
         if (ch == '0') {
             advance();
             return new Token (TokenType.NUMBER, Character.toString(ch));
         }  else if (Character.isDigit(ch))
             return number();
-
-
 
         switch (ch) {
             case '+':
@@ -59,6 +62,15 @@ public class Scanner {
         return new Token(TokenType.NUMBER, n);
     }
 
+    //Função identificador
+    private Token identifier() {
+        int start = current;
+        while (isAlphaNumeric(peek())) advance();
+
+        String id = new String(input, start, current-start);
+        return new Token(TokenType.IDENT, id);
+    }
+
     //Metodo para remover caracteres em branco
     private void skipWhitespace() {
         char ch = peek();
@@ -66,5 +78,16 @@ public class Scanner {
             advance();
             ch = peek();
         }
+    }
+
+    //Funções Auxiliares
+    private boolean isAlpha(char c) {
+        return (c >= 'a' && c <= 'z') ||
+                (c >= 'A' && c <= 'Z') ||
+                c == '_';
+    }
+
+    private boolean isAlphaNumeric(char c) {
+        return isAlpha(c) || Character.isDigit((c));
     }
 }

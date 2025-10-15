@@ -28,16 +28,28 @@ public class Parser {
         match(TokenType.NUMBER);
     }
 
+    //Implementando Term
+    void term () {
+        if (currentToken.type == TokenType.NUMBER)
+            number();
+        else if (currentToken.type == TokenType.IDENT) {
+            System.out.println("push "+currentToken.lexeme);
+            match(TokenType.IDENT);
+        }
+        else
+            throw new Error("syntax error");
+    }
+
     // Novo metodo oper
     void oper () {
         if (currentToken.type == TokenType.PLUS) {
             match(TokenType.PLUS);
-            number();
+            term();
             System.out.println("add");
             oper();
         } else if (currentToken.type == TokenType.MINUS) {
             match(TokenType.MINUS);
-            number();
+            term();
             System.out.println("sub");
             oper();
         }
@@ -45,7 +57,7 @@ public class Parser {
 
     // Permanece o mesmo
     void expr() {
-        number();
+        term();
         oper();
     }
 
